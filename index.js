@@ -15,8 +15,8 @@ let fromClause = () => choice("1", "2", selectClause, "4");
 
 let test1 = choice(
   terminal("a"),
-  sequence(terminal("b"), terminal("c")),
-  choice("e", "d")
+  choice("e", "d"),
+  sequence(terminal("b"), terminal("c"))
 );
 
 /*
@@ -45,7 +45,7 @@ let test4 = sequence("b", "c");
 let test5 = repeat(terminal("b"));
 //let result = fromClause();
 console.log(test5);
-const data = test5.toG6();
+const data = test1.toG6();
 console.log(JSON.stringify(data));
 
 G6.registerNode(
