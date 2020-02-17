@@ -1,17 +1,22 @@
 import G6 from "@antv/g6";
-import * as flow from "./flow.js";
+import {
+  repeat,
+  sequence,
+  optional,
+  choice,
+  zeroOrMore,
+  terminal,
+  Terminal
+} from "./flow.js";
 import { graphdata } from "./data.js";
 
-// test
+let selectClause = () => sequence(a, b, repeat(optional("c")), ZeroOrMore("d"));
+let fromClause = () => choice("1", "2", selectClause, "4");
 
-let selectClause = () =>
-  flow.sequence(a, b, flow.repeat(flow.optional("c")), flow.ZeroOrMore("d"));
-let fromClause = () => flow.choice("1", "2", selectClause, "4");
-
-let test1 = flow.choice(
-  flow.terminal("a"),
-  flow.sequence(flow.terminal("b"), flow.terminal("c")),
-  flow.choice("e", "d")
+let test1 = choice(
+  terminal("a"),
+  sequence(terminal("b"), terminal("c")),
+  choice("e", "d")
 );
 
 /*
@@ -27,17 +32,17 @@ let selectClause = function() {
 //*/
 
 function a() {
-  return new flow.Terminal("a");
+  return new Terminal("a");
 }
 
 function b() {
-  return new flow.Terminal("b");
+  return new Terminal("b");
 }
 
-let test2 = flow.choice(flow.terminal("a"), flow.choice("e", "d"));
-let test3 = flow.choice("e", "d");
-let test4 = flow.sequence("b", "c");
-let test5 = flow.repeat(flow.terminal("b"));
+let test2 = choice(terminal("a"), choice("e", "d"));
+let test3 = choice("e", "d");
+let test4 = sequence("b", "c");
+let test5 = repeat(terminal("b"));
 //let result = fromClause();
 console.log(test5);
 const data = test5.toG6();
@@ -93,10 +98,13 @@ const graph = new G6.Graph({
   height,
   layout: {
     type: "dagre",
-
-    nodesep: 100,
-    ranksep: 50,
-    controlPoints: true
+    nodesepFunc: d => {
+      if (d.id === "3") {
+        return 500;
+      }
+      return 50;
+    },
+    ranksep: 70
   },
   defaultNode: {
     type: "sql"
@@ -112,7 +120,7 @@ const graph = new G6.Graph({
     }
   },
   modes: {
-    default: ["drag-canvas", "zoom-canvas", "click-select"]
+    default: ["drag-canvas", "zoom-canvas"]
   },
   fitView: true
 });
