@@ -1,8 +1,6 @@
 import G6 from "@antv/g6";
-export function flowgraph(container){
-  G6.registerNode(
-    "sql",
-    {
+
+const sqlNodeOptions =    {
       drawShape(cfg, group) {
         const rect = group.addShape("rect", {
           attrs: {
@@ -34,8 +32,10 @@ export function flowgraph(container){
         }
         return rect;
       }
-    },
-    "single-node"
+    };
+export function flowgraph(container){
+  G6.registerNode(
+    "sql", sqlNodeOptions, "single-node"
   );
   G6.Global.nodeStateStyle.selected = {
     stroke: "#d9d9d9",
@@ -44,7 +44,7 @@ export function flowgraph(container){
 
   const width = document.getElementById("container").scrollWidth;
   const height = document.getElementById("container").scrollHeight || 500;
-  const graph = new G6.Graph({
+  const graphOptions = {
     container: container,
     width,
     height,
@@ -75,7 +75,8 @@ export function flowgraph(container){
       default: ["drag-canvas", "zoom-canvas"]
     },
     fitView: true
-  });
+  };
+  const graph = new G6.Graph(graphOptions);
 
   return graph;
 }
