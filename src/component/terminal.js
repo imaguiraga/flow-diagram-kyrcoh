@@ -1,13 +1,13 @@
 export class Terminal {
   static ID = 0;
-  constructor(value, type) {
+  constructor(value, kind) {
     let self = this;
 
     self.title = value;
     //get new id
     Terminal.ID = Terminal.ID + 1;
-    self.type = type || "terminal";
-    self.id = self.type + "." + Terminal.ID;
+    self.kind = kind || "terminal";
+    self.id = self.kind + "." + Terminal.ID;
     self._nodes = [value];
     self._start = this;
     self._finish = this;
@@ -38,8 +38,10 @@ export class Terminal {
 
     let n = {
       id: this.id,
-      label: this.id //,
-      //cfg: node
+      label: this.id ,
+      model: { 
+        kind: 'terminal'
+      }
     };
     if (filter) {
       if (!filter(n)) {
@@ -80,7 +82,7 @@ export class NonTerminal extends Terminal {
         console.log(_nodes.name);
         self._nodes.push(Terminal.getName(_nodes.name, _nodes.call()));
       } else {
-        if (typeof a === "string") {
+        if (typeof _nodes === "string") {
           self._nodes.push(terminal(_nodes));
         } else {
           self._nodes.push(_nodes);

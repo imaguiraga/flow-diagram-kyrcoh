@@ -14,38 +14,43 @@ export class Choice extends NonTerminal {
     // start + finish nodes
     data.nodes.push({
       id: this.start.id,
-      label: this.start.id //,
-      //cfg: this.start
+      label: this.start.id,
+      model: { 
+        kind: 'choice.start'
+      }
     });
 
     const self = this;
     // nodes
-    if (this.type === "choice") {
+    if (this.kind === "choice") {
       this._nodes.forEach(node => {
         // keep only terminal nodes
-        if (node.type !== "terminal") {
+        if (node.kind !== "terminal") {
           return;
         }
         let n = {
           id: node.id,
-          label: node.id
-          //cfg: node
+          label: node.id,
+          model: { 
+            kind: 'choice.terminal'
+          }
         };
-        debugger;
+
         if (filter) {
           if (!filter(n)) {
             data.nodes.push(n);
           }
         } else {
-          //if (!self.foundNode(n)) {
           data.nodes.push(n);
         }
       });
     }
     data.nodes.push({
       id: this.finish.id,
-      label: this.finish.id //,
-      //cfg: this.finish
+      label: this.finish.id ,
+      model: { 
+        kind: 'choice.finish'
+      }
     });
     // edges
     for (let i = 0; i < this._nodes.length; i++) {

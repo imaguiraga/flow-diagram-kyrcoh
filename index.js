@@ -8,12 +8,11 @@ import {
   Terminal,
   flowgraph
 } from "./flow.js";
-//import { graphdata } from "./data.js";
 
 let selectClause = () => sequence(a, b, repeat(optional("c")), zeroOrMore("d"));
 let fromClause = () => choice("1", "2", selectClause, "4");
 
-let testlow = choice(
+let testflow = choice(
   terminal("a"),
   choice("e", "d"),
   sequence(terminal("b"), terminal("c"))
@@ -39,13 +38,13 @@ function b() {
   return new Terminal("b");
 }
 
-//let testlow = choice(terminal("a"), choice("e", "d"));
-//let testlow = choice("e", "d");
-//let testlow = sequence("b", "c");
-//let testlow = repeat(terminal("b"));
-//let result = fromClause();
-console.log(testlow);
-const data = testlow.toG6();
+//let testflow = choice(terminal("a"), choice("e", "d"));
+//let testflow = choice("e", "d");
+//let testflow = sequence("b", "c");
+// testflow = repeat(terminal("b"));
+// testflow = fromClause();
+console.log(testflow);
+const data = testflow.toG6();
 console.log(JSON.stringify(data));
 
 let graph = flowgraph("container");
