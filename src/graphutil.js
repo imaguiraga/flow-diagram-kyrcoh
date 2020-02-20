@@ -65,6 +65,11 @@ export function flowgraph(containerId){
         stroke:"#5B8FF9",
         fill: "#C6E5FF",
         textColor: "#00287E"
+      },
+      labelCfg: {
+        style: {
+          fontSize: 14,
+        }
       }
     },
     defaultEdge: {
@@ -83,49 +88,89 @@ export function flowgraph(containerId){
     fitView: true
   };
   const graph = new G6.Graph(graphOptions);
-  // Override node default config based on nodde.kind
-  const getNodeConfig = function(node) {
-      let stroke = null;
-      let fill = null;
-      let textColor = graph.cfg.defaultNode.style.textColor;
-      switch(node.model.kind){
-        case "choice.start":
-        case "choice.finish":
-          fill = "#7e3ff2";
-          stroke = "#5300e8";
-          textColor = "#FFFFFF";
-        break;
-        case "optional.start":
-        case "optional.finish":
-          fill = "#aaf255";
-          stroke = "#61d800";
-          textColor = "#FFFFFF";
-        break;
-        case "repeat.start":
-        case "repeat.finish":
-          fill = "#df55f2";
-          stroke = "#ba00e5";
-          textColor = "#FFFFFF";
-        break;
-        default:
-        break;
-      }
-      // Compute stroke and textColor
-      return {
-        label: node.id,
+
+// Override node default config based on nodde.kind
+ 
+  const NODE_KIND_CFG = {
+    // Choice
+    "choice.start": {
+      style: {
+        fill: "#7e3ff2",
+        stroke: "#5300e8"
+      },
+      labelCfg: {
         style: {
-          stroke ,
-          fill,
-          textColor
-        },
-        labelCfg: {
-          style: {
-            fill: textColor,
-            fontSize: 14,
-          }
+          fill: "#FFFFFF"
         }
-      };
-    };
+      }
+    },
+    "choice.finish": {
+      style: {
+        fill: "#7e3ff2",
+        stroke: "#5300e8"
+      },
+      labelCfg: {
+        style: {
+          fill: "#FFFFFF"
+        }
+      }
+    },
+    // Optional 
+    "optional.start": {
+      style: {
+        fill: "#aaf255",
+        stroke: "#61d800"
+      },
+      labelCfg: {
+        style: {
+          fill: "#FFFFFF"
+        }
+      }
+    },
+    "optional.finish": {
+      style: {
+        fill: "#aaf255",
+        stroke: "#61d800"
+      },
+      labelCfg: {
+        style: {
+          fill: "#FFFFFF"
+        }
+      }
+    },
+    // Repeat
+    "repeat.start": {
+      style: {
+        fill: "#df55f2",
+        stroke: "#ba00e5"
+      },
+      labelCfg: {
+        style: {
+          fill: "#FFFFFF"
+        }
+      }
+    },
+    "repeat.finish": {
+      style: {
+        fill: "#df55f2",
+        stroke: "#ba00e5"
+      },
+      labelCfg: {
+        style: {
+          fill: "#FFFFFF"
+        }
+      }
+    }
+  };
+
+  const getNodeConfig = function(node) {
+    // Compute stroke and textColor
+    if(NODE_KIND_CFG.hasOwnProperty(node.model.kind)) {
+      return NODE_KIND_CFG[node.model.kind];
+    }
+
+    return {};
+  };
   graph.node(getNodeConfig);
 
   return graph;
