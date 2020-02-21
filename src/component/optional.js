@@ -15,23 +15,27 @@ export class Optional extends NonTerminal {
     // start + finish nodes
     data.nodes.push({
       id: this.start.id,
-      label: this.start.id //,
-      //cfg: this.start
+      label: this.start.id ,
+      model: { 
+        kind: 'optional.start'
+      }
     });
 
     const self = this;
     // nodes
     debugger;
-    if (this.type === "optional") {
+    if (this.kind === "optional") {
       this._nodes.forEach(node => {
         // keep only terminal nodes
-        if (node.type !== "terminal") {
+        if (node.kind !== "terminal") {
           return;
         }
         let n = {
           id: node.id,
-          label: node.id //,
-          //cfg: node
+          label: node.id ,
+          model: { 
+            kind: 'optional.terminal'
+          }
         };
         if (filter) {
           if (!filter(n)) {
@@ -44,8 +48,10 @@ export class Optional extends NonTerminal {
     }
     data.nodes.push({
       id: this.finish.id,
-      label: this.finish.id //,
-      //cfg: this.finish
+      label: this.finish.id ,
+      model: { 
+        kind: 'optional.finish'
+      }
     });
     // edges
     for (let i = 0; i < this._nodes.length; i++) {

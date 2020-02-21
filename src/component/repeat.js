@@ -15,22 +15,26 @@ export class Repeat extends NonTerminal {
     // start + finish nodes
     data.nodes.push({
       id: this.start.id,
-      label: this.start.id //,
-      // cfg: this.start
+      label: this.start.id,
+      model: { 
+        kind: 'repeat.start'
+      }
     });
 
     const self = this;
     // nodes
-    if (this.type === "repeat") {
+    if (this.kind === "repeat") {
       this._nodes.forEach(node => {
         // keep only terminal nodes
-        if (node.type !== "terminal") {
+        if (node.kind !== "terminal") {
           return;
         }
         let n = {
           id: node.id,
-          label: node.id //,
-          //cfg: node
+          label: node.id ,
+          model: { 
+            kind: 'repeat.terminal'
+          }
         };
         if (filter) {
           if (!filter(n)) {
@@ -44,8 +48,10 @@ export class Repeat extends NonTerminal {
 
     data.nodes.push({
       id: this.finish.id,
-      label: this.finish.id //,
-      //cfg: this.finish
+      label: this.finish.id,
+      model: { 
+        kind: 'repeat.finish'
+      }
     });
     // edges
     for (let i = 0; i < this._nodes.length; i++) {

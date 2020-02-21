@@ -3,7 +3,7 @@ import {NonTerminal,Terminal} from "./terminal.js"
 export class Sequence extends NonTerminal {
   constructor(value) {
     super(value, "sequence");
-    this.type = "sequence";
+    this.kind = "sequence";
     this._start = this.children[0];
     this._finish = this.children[this.children.length - 1];
   }
@@ -15,23 +15,24 @@ export class Sequence extends NonTerminal {
     };
     const self = this;
     // nodes
-    if (this.type === "sequence") {
+    if (this.kind === "sequence") {
       this._nodes.forEach(node => {
         // keep only terminal nodes
-        if (node.type !== "terminal") {
+        if (node.kind !== "terminal") {
           return;
         }
         let n = {
           id: node.id,
-          label: node.id //,
-          //cfg: node
+          label: node.id,
+          model: { 
+            kind: 'sequence.terminal'
+          }
         };
         if (filter) {
           if (!filter(n)) {
             data.nodes.push(n);
           }
         } else {
-          //else if (!self.foundNode(n)) {
           data.nodes.push(n);
         }
       });
