@@ -1,5 +1,4 @@
 import G6 from "@antv/g6";
-import {lighten,darken,contrast} from "less"
 
 const flowEltNodeOptions =    {
       drawShape(cfg, group) {
@@ -16,22 +15,7 @@ const flowEltNodeOptions =    {
           },
           name: "rect-shape"
         });
-        /*
-        if (cfg.name) {
-          group.addShape("text", {
-            attrs: {
-              text: cfg.name,
-              x: 0,
-              y: 0,
-              fill: cfg.style.textColor || "#00287E",
-              fontSize: 14,
-              textAlign: "center",
-              textBaseline: "middle",
-              fontWeight: "bold"
-            },
-            name: "text-shape"
-          });
-        }//*/
+
         return rect;
       }
     };
