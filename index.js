@@ -46,7 +46,7 @@ function b() {
 // testflow = fromClause();
 console.log(testflow);
 const visitor = new G6Visitor();
-const data = visitor.visit(testflow);
+const data = testflow.accept(visitor);
 console.log(JSON.stringify(data));
 
 let graph = flowgraph("container");

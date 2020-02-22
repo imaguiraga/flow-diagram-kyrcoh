@@ -1,7 +1,7 @@
 
 
 export class G6Visitor {
-  
+
   visit(tree,filter){
     switch(tree.kind){
       case "choice":

@@ -34,7 +34,7 @@ export class Terminal {
     return this.id === node.id;
   }
 
-  accept(visitor){
+  accept(visitor,filter){
     return visitor.visit(this,filter);
   }
 
