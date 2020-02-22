@@ -30,15 +30,25 @@ export class Terminal {
     return obj;
   }
 
+  foundNode(node) {
+    return this.id === node.id;
+  }
+
   toG6(filter) {
+    return new TerminalG6Visitor().visit(this,filter);
+  }
+}
+
+export class TerminalG6Visitor{
+  visit(tree,filter) {
     const data = {
       nodes: [],
       edges: []
     };
 
     let n = {
-      id: this.id,
-      label: this.id ,
+      id: tree.id,
+      label: tree.id ,
       model: { 
         kind: 'terminal'
       }
@@ -53,9 +63,6 @@ export class Terminal {
     return data;
   }
 
-  foundNode(node) {
-    return this.id === node.id;
-  }
 }
 
 export class NonTerminal extends Terminal {

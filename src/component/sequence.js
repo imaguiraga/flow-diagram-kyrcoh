@@ -9,14 +9,22 @@ export class Sequence extends NonTerminal {
   }
 
   toG6(filter) {
+    return new SequenceG6Visitor().visit(this,filter);
+  }
+}
+
+export class SequenceG6Visitor{
+  visit(tree,filter) {
     const data = {
       nodes: [],
       edges: []
     };
-    const self = this;
+    if (tree.kind !== "sequence") {
+      return data;
+    }
     // nodes
-    if (this.kind === "sequence") {
-      this._nodes.forEach(node => {
+    if (tree.kind === "sequence") {
+      tree._nodes.forEach(node => {
         // keep only terminal nodes
         if (node.kind !== "terminal") {
           return;
@@ -38,16 +46,16 @@ export class Sequence extends NonTerminal {
       });
     }
     // edges
-    for (let i = 0; i < this._nodes.length - 1; i++) {
+    for (let i = 0; i < tree._nodes.length - 1; i++) {
       data.edges.push({
-        source: this._nodes[i].finish.id,
-        target: this._nodes[i + 1].start.id
+        source: tree._nodes[i].finish.id,
+        target: tree._nodes[i + 1].start.id
       });
     }
     // concatenate G6 graphs
 
-    this._nodes.forEach(node => {
-      let g6 = node.toG6(n => self.foundNode(n));
+    tree._nodes.forEach(node => {
+      let g6 = node.toG6(n => tree.foundNode(n));
       data.nodes = data.nodes.concat(g6.nodes);
       data.edges = data.edges.concat(g6.edges);
     });
