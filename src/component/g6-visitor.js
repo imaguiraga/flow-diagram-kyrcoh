@@ -1,20 +1,23 @@
-export default class G6Visitor {
+
+
+export class G6Visitor {
+  
   visit(tree,filter){
     switch(tree.kind){
       case "choice":
-        return visitChoice(tree,filter);
+        return this.visitChoice(tree,filter);
       break;
       case "optional":
-        return visitOptional(tree,filter);
+        return this.visitOptional(tree,filter);
       break;
       case "sequence":
-        return visitSequence(tree,filter);
+        return this.visitSequence(tree,filter);
       break;
       case "repeat":
-        return visitRepeat(tree,filter);
+        return this.visitRepeat(tree,filter);
       break;
       case "terminal":
-        return visitTerminal(tree,filter);
+        return this.visitTerminal(tree,filter);
       break;
 
     }

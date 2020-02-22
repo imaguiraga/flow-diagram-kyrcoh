@@ -6,7 +6,8 @@ import {
   zeroOrMore,
   terminal,
   Terminal,
-  flowgraph
+  flowgraph,
+  G6Visitor
 } from "./flow.js";
 
 let selectClause = () => sequence(a, b, repeat(optional("c")), zeroOrMore("d"));
@@ -44,7 +45,8 @@ function b() {
 // testflow = repeat(terminal("b"));
 // testflow = fromClause();
 console.log(testflow);
-const data = testflow.toG6();
+const visitor = new G6Visitor();
+const data = visitor.visit(testflow);
 console.log(JSON.stringify(data));
 
 let graph = flowgraph("container");
