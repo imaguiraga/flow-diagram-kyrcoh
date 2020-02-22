@@ -1,5 +1,3 @@
-
-
 export class G6Visitor {
 
   visit(tree,filter){
