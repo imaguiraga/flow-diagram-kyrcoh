@@ -99,6 +99,29 @@ export function flowgraph(containerId){
         }
       }
     }],
+    // Sequence
+    ["sequence.start", {
+      style: {
+        fill: "#7e3ff2",
+        stroke: "#5300e8"
+      },
+      labelCfg: {
+        style: {
+          fill: "#FFFFFF"
+        }
+      }
+    }],
+    ["sequence.finish", {
+      style: {
+        fill: "#7e3ff2",
+        stroke: "#5300e8"
+      },
+      labelCfg: {
+        style: {
+          fill: "#FFFFFF"
+        }
+      }
+    }],
     // Optional 
     ["optional.start", {
       style: {

@@ -79,6 +79,14 @@ export class SequenceG6Visitor{
     if (tree.kind !== "sequence") {
       return data;
     }
+    // start + finish nodes
+    data.nodes.push({
+      id: tree.start.id,
+      label: tree.start.id,
+      model: { 
+        kind: 'sequence.start'
+      }
+    });
     // nodes
     if (tree.kind === "sequence") {
       tree._nodes.forEach(node => {
@@ -102,13 +110,30 @@ export class SequenceG6Visitor{
         }
       });
     }
+    data.nodes.push({
+      id: tree.finish.id,
+      label: tree.finish.id ,
+      model: { 
+        kind: 'sequence.finish'
+      }
+    });
     // edges
+    data.edges.push({
+        source: tree.start.id,
+        target: tree._nodes[0].start.id
+      });
+
     for (let i = 0; i < tree._nodes.length - 1; i++) {
       data.edges.push({
         source: tree._nodes[i].finish.id,
         target: tree._nodes[i + 1].start.id
       });
     }
+
+    data.edges.push({
+      source: tree._nodes[tree._nodes.length - 1].finish.id,
+      target: tree.finish.id
+    });
     // concatenate G6 graphs
 
     tree._nodes.forEach(node => {
