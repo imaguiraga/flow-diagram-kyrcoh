@@ -6,7 +6,7 @@ export class Choice extends NonTerminal {
     this.type = "choice";
   }
   toG6(filter) {
-    return new ChoiceG6Visitor().visit(this,filter);
+    return ChoiceG6Visitor.visit(this,filter);
   }
 }
 
@@ -15,7 +15,7 @@ export function choice(...nodes) {
 }
 
 export class ChoiceG6Visitor{
-  visit(tree,filter){
+  static visit(tree,filter){
 
     const data = {
       nodes: [],

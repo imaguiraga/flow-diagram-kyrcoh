@@ -7,12 +7,12 @@ export class Repeat extends NonTerminal {
   }
 
   toG6(filter) {
-    return new RepeatG6Visitor().visit(this,filter);
+    return RepeatG6Visitor.visit(this,filter);
   }
 }
 
 export class RepeatG6Visitor{
-  visit(tree,filter) {
+  static visit(tree,filter) {
     const data = {
       nodes: [],
       edges: []

@@ -9,12 +9,12 @@ export class Sequence extends NonTerminal {
   }
 
   toG6(filter) {
-    return new SequenceG6Visitor().visit(this,filter);
+    return SequenceG6Visitor.visit(this,filter);
   }
 }
 
 export class SequenceG6Visitor{
-  visit(tree,filter) {
+  static visit(tree,filter) {
     const data = {
       nodes: [],
       edges: []

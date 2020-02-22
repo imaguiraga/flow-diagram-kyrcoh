@@ -7,12 +7,12 @@ export class Optional extends NonTerminal {
   }
 
   toG6(filter) {
-    return new OptionalG6Visitor().visit(this,filter);
+    return OptionalG6Visitor.visit(this,filter);
   }
 }
 
 export class OptionalG6Visitor{
-  visit(tree,filter) {
+  static visit(tree,filter) {
     const data = {
       nodes: [],
       edges: []
