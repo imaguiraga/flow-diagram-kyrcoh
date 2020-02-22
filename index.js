@@ -8,7 +8,7 @@ import {
   Terminal,
   flowgraph,
   G6Visitor
-} from "./flow.js";
+} from "./src/flow.js";
 
 let selectClause = () => sequence(a, b, repeat(optional("c")), zeroOrMore("d"));
 let fromClause = () => choice("1", "2", selectClause, "4");
