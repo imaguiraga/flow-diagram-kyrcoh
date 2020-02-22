@@ -371,7 +371,7 @@ export class RepeatG6Visitor{
     });
     // concatenate G6 graphs
 
-    this._nodes.forEach(node => {
+    tree._nodes.forEach(node => {
       let g6 = node.accept(visitor,n => tree.foundNode(n));
       if(g6 !== null) {
         data.nodes = data.nodes.concat(g6.nodes);

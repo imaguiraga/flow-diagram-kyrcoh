@@ -10,6 +10,8 @@ import {
   G6Visitor
 } from "./src/flow.js";
 
+import * as flow from "./src/flow.js";
+
 let selectClause = () => sequence(a, b, repeat(optional("c")), zeroOrMore("d"));
 let fromClause = () => choice("1", "2", selectClause, "4");
 
@@ -19,6 +21,24 @@ let testflow = choice(
   sequence(terminal("b"), terminal("c"))
 );
 //*/
+
+function load(module){
+  const {
+    repeat,
+    sequence,
+    optional,
+    choice,
+    zeroOrMore,
+    terminal
+    } = module;
+  let f = () => {
+    return sequence(a, b, repeat("c"));
+  };
+  return f;
+} 
+
+testflow = load(flow)();
+
 /*
 let selectClause = () => {
   return sequence(a, b, repeat(optional("c")), ZeroOrMore("d"));
@@ -39,6 +59,7 @@ function b() {
   return new Terminal("b");
 }
 
+let testf = new Function('return choice("1", "2", selectClause, "4");');
 //let testflow = choice(terminal("a"), choice("e", "d"));
 //let testflow = choice("e", "d");
 //let testflow = sequence("b", "c");
