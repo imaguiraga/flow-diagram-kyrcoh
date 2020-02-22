@@ -30,32 +30,14 @@ export class Terminal {
     return obj;
   }
 
-  toG6(filter) {
-    const data = {
-      nodes: [],
-      edges: []
-    };
-
-    let n = {
-      id: this.id,
-      label: this.id ,
-      model: { 
-        kind: 'terminal'
-      }
-    };
-    if (filter) {
-      if (!filter(n)) {
-        data.nodes.push(n);
-      }
-    } else {
-      data.nodes.push(n);
-    }
-    return data;
-  }
-
   foundNode(node) {
     return this.id === node.id;
   }
+
+  accept(visitor,filter){
+    return visitor.visit(this,filter);
+  }
+
 }
 
 export class NonTerminal extends Terminal {

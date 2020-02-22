@@ -75,9 +75,9 @@ export function flowgraph(containerId){
 
 // Override node default config based on nodde.kind
  
-  const NODE_KIND_CFG = {
+  const NODE_KIND_CFG = new Map([
     // Choice
-    "choice.start": {
+    ["choice.start", {
       style: {
         fill: "#7e3ff2",
         stroke: "#5300e8"
@@ -87,8 +87,8 @@ export function flowgraph(containerId){
           fill: "#FFFFFF"
         }
       }
-    },
-    "choice.finish": {
+    }],
+    ["choice.finish", {
       style: {
         fill: "#7e3ff2",
         stroke: "#5300e8"
@@ -98,9 +98,9 @@ export function flowgraph(containerId){
           fill: "#FFFFFF"
         }
       }
-    },
+    }],
     // Optional 
-    "optional.start": {
+    ["optional.start", {
       style: {
         fill: "#aaf255",
         stroke: "#61d800"
@@ -110,8 +110,8 @@ export function flowgraph(containerId){
           fill: "#FFFFFF"
         }
       }
-    },
-    "optional.finish": {
+    }],
+    ["optional.finish", {
       style: {
         fill: "#aaf255",
         stroke: "#61d800"
@@ -121,9 +121,9 @@ export function flowgraph(containerId){
           fill: "#FFFFFF"
         }
       }
-    },
+    }],
     // Repeat
-    "repeat.start": {
+    ["repeat.start", {
       style: {
         fill: "#df55f2",
         stroke: "#ba00e5"
@@ -133,8 +133,8 @@ export function flowgraph(containerId){
           fill: "#FFFFFF"
         }
       }
-    },
-    "repeat.finish": {
+    }],
+    ["repeat.finish", {
       style: {
         fill: "#df55f2",
         stroke: "#ba00e5"
@@ -144,13 +144,13 @@ export function flowgraph(containerId){
           fill: "#FFFFFF"
         }
       }
-    }
-  };
+    }]
+  ]);
 
   const getNodeConfig = function(node) {
     // Compute stroke and textColor
-    if(NODE_KIND_CFG.hasOwnProperty(node.model.kind)) {
-      return NODE_KIND_CFG[node.model.kind];
+    if(NODE_KIND_CFG.has(node.model.kind)) {
+      return NODE_KIND_CFG.get(node.model.kind);
     }
 
     return {};
