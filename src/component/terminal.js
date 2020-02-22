@@ -35,35 +35,7 @@ export class Terminal {
   }
 
   accept(visitor){
-    return visitor.visitTerminal(this,filter);
-  }
-  toG6(filter) {
-    return TerminalG6Visitor.visit(this,filter);
-  }
-}
-
-export class TerminalG6Visitor{
-  static visit(tree,filter) {
-    const data = {
-      nodes: [],
-      edges: []
-    };
-
-    let n = {
-      id: tree.id,
-      label: tree.id ,
-      model: { 
-        kind: 'terminal'
-      }
-    };
-    if (filter) {
-      if (!filter(n)) {
-        data.nodes.push(n);
-      }
-    } else {
-      data.nodes.push(n);
-    }
-    return data;
+    return visitor.visit(this,filter);
   }
 
 }
