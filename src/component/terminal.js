@@ -34,13 +34,16 @@ export class Terminal {
     return this.id === node.id;
   }
 
+  accept(visitor){
+    return visitor.visitTerminal(this,filter);
+  }
   toG6(filter) {
-    return new TerminalG6Visitor().visit(this,filter);
+    return TerminalG6Visitor.visit(this,filter);
   }
 }
 
 export class TerminalG6Visitor{
-  visit(tree,filter) {
+  static visit(tree,filter) {
     const data = {
       nodes: [],
       edges: []
