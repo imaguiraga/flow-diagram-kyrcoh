@@ -7,7 +7,8 @@ import {
   terminal,
   Terminal,
   flowgraph,
-  G6Visitor
+  G6Visitor,
+  UIDVisitor
 } from "./src/flow.js";
 
 import * as flow from "./src/flow.js";
@@ -65,6 +66,8 @@ let testf = new Function('return choice("1", "2", selectClause, "4");');
 // testflow = fromClause();
 console.log(testflow);
 const visitor = new G6Visitor();
+const uidvisitor = new UIDVisitor();
+testflow = uidvisitor.visit(testflow);
 const data = visitor.visit(testflow);
 console.log(JSON.stringify(data));
 
