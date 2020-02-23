@@ -22,22 +22,20 @@ let testflow = choice(
 );
 //*/
 
-function load(module){
-  const {
+let f = new Function("module",`const {
     repeat,
     sequence,
     optional,
     choice,
     zeroOrMore,
     terminal
-    } = module;
+  } = module;
   let f = () => {
-    return sequence(a, b, repeat("c"));
+    return choice("a", "b", repeat("c"));
   };
-  return f;
-} 
+  return f;`);
 
-testflow = load(flow)();
+testflow = f(flow)();
 
 /*
 let selectClause = () => {
