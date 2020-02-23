@@ -2,7 +2,8 @@
   "name": "flow-react-kyrcoh",
   "version": "1.0.0",
   "description": "flow diagram project",
-  "main": "index.html",
+  //"main": "index.html",
+  "main": "./src/flow.js", 
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build *.html"
