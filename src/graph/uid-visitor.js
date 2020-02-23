@@ -26,28 +26,28 @@ export class UIDVisitor {
   }
 
   visitSequence(tree,filter){
-    return SequenceG6Visitor.visit(this,tree,filter);
+    return SequenceVisitor.visit(this,tree,filter);
   }
 
   visitChoice(tree,filter){
-    return ChoiceG6Visitor.visit(this,tree,filter);
+    return ChoiceVisitor.visit(this,tree,filter);
   }
 
   visitOptional(tree,filter){
-    return OptionalG6Visitor.visit(this,tree,filter);
+    return OptionalVisitor.visit(this,tree,filter);
   }
 
   visitRepeat(tree,filter){
-    return RepeatG6Visitor.visit(this,tree,filter);
+    return RepeatVisitor.visit(this,tree,filter);
   }
 
   visitTerminal(tree,filter){
-    return TerminalG6Visitor.visit(this,tree,filter);
+    return TerminalVisitor.visit(this,tree,filter);
   }
 }
 
 
-export class TerminalG6Visitor{
+class TerminalVisitor{
   static visit(visitor,tree,filter) {
     const data = {
       nodes: [],
@@ -73,7 +73,7 @@ export class TerminalG6Visitor{
 
 }
 
-export class SequenceG6Visitor{
+class SequenceVisitor{
   static visit(visitor,tree,filter) {
     const data = {
       nodes: [],
@@ -151,7 +151,7 @@ export class SequenceG6Visitor{
   }
 }
 
-export class ChoiceG6Visitor{
+class ChoiceVisitor{
   static visit(visitor,tree,filter){
 
     const data = {
@@ -228,7 +228,7 @@ export class ChoiceG6Visitor{
   
 }
 
-export class OptionalG6Visitor{
+class OptionalVisitor{
   static visit(visitor,tree,filter) {
     const data = {
       nodes: [],
@@ -307,7 +307,7 @@ export class OptionalG6Visitor{
   }
 }
 
-export class RepeatG6Visitor{
+class RepeatVisitor{
   static visit(visitor,tree,filter) {
     const data = {
       nodes: [],
