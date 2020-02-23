@@ -31,7 +31,7 @@ let f = new Function("module",`const {
     terminal
   } = module;
   let f = () => {
-    return choice("a", "b", repeat("c"));
+    return choice("a", "b", repeat(optional("c")));
   };
   return f;`);
 
