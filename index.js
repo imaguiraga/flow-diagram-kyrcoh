@@ -21,7 +21,7 @@ let testflow = choice(
   sequence(terminal("b"), terminal("c"))
 );
 //*/
-
+// Generate flow by parsing javascript text
 let f = new Function("module",`const {
     repeat,
     sequence,
