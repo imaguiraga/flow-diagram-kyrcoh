@@ -1,4 +1,4 @@
-import {NonTerminal,Terminal} from "./terminal.js"
+import {NonTerminal,Terminal,terminal} from "./terminal.js"
 
 export class Repeat extends NonTerminal {
   constructor(value) {
@@ -7,8 +7,6 @@ export class Repeat extends NonTerminal {
   }
 
 }
-
-
 
 export function repeat(elt) {
   if (typeof elt === "string") {
