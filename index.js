@@ -19,7 +19,8 @@ let fromClause = () => choice("1", "2", selectClause, "4");
 let testflow = choice(
   terminal("a"),
   choice("e", "d"),
-  sequence(terminal("b"), terminal("c"))
+  sequence(terminal("b"), terminal("c"),sequence("c","d")),
+  sequence("c","d")
 );
 //*/
 // Generate flow by parsing javascript text
@@ -36,7 +37,7 @@ let f = new Function("module",`const {
   };
   return f;`);
 
-testflow = f(flow)();
+//testflow = f(flow)();
 
 /*
 let selectClause = () => {
