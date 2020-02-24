@@ -2,8 +2,7 @@
   "name": "flow-diagram-kyrcoh",
   "version": "1.0.0",
   "description": "flow diagram project",
-  //"main": "index.html",
-  "main": "./src/flow.js", 
+  "main": "index.html",
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build *.html"
