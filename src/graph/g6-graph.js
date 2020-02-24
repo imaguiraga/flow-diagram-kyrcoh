@@ -30,7 +30,7 @@ const flowEltNodeOptions =    {
 
 export function flowgraph(containerId){
 
-  const width = document.getElementById(containerId).scrollWidth;
+  const width = document.getElementById(containerId).scrollWidth || 500;
   const height = document.getElementById(containerId).scrollHeight || 500;
   const graphOptions = {
     container: containerId,
