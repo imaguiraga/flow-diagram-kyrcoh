@@ -38,7 +38,7 @@ let func = new Function("module",`const {
     sequence(terminal("b"), terminal("c"),choice("c","d")),
     sequence("c","d")
   );
-  return fx;`);
+  return f;`);
 try {
   testflow = func(flow);
 }catch(e){
