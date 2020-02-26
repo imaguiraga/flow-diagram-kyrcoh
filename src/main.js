@@ -1,4 +1,5 @@
-import {
+import * as flow from "./flow.js";
+const {
   repeat,
   sequence,
   optional,
@@ -9,9 +10,7 @@ import {
   flowgraph,
   G6Visitor,
   UIDVisitor
-} from "./flow.js";
-
-import * as flow from "./flow.js";
+} = flow;
 
 let selectClause = () => sequence(a, b, repeat(optional("c")), zeroOrMore("d"));
 let fromClause = () => choice("1", "2", selectClause, "4");
