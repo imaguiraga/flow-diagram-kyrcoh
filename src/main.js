@@ -38,10 +38,12 @@ let func = new Function("module",`const {
     sequence(terminal("b"), terminal("c"),choice("c","d")),
     sequence("c","d")
   );
-  return f;`);
-
-testflow = func(flow);
-
+  return fx;`);
+try {
+  testflow = func(flow);
+}catch(e){
+  console.error(e.name + ': ' + e.message);
+}
 /*
 let selectClause = () => {
   return sequence(a, b, repeat(optional("c")), ZeroOrMore("d"));
