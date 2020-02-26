@@ -24,7 +24,7 @@ let testflow = choice(
 );
 //*/
 // Generate flow by parsing javascript text
-let f = new Function("module",`const {
+let func = new Function("module",`const {
     repeat,
     sequence,
     optional,
@@ -32,12 +32,15 @@ let f = new Function("module",`const {
     zeroOrMore,
     terminal
   } = module;
-  let f = () => {
-    return choice("a", "b", repeat(optional("c")));
-  };
+  let f = choice(
+    terminal("a"),
+    choice("e", "d"),
+    sequence(terminal("b"), terminal("c"),choice("c","d")),
+    sequence("c","d")
+  );
   return f;`);
 
-//testflow = f(flow)();
+testflow = func(flow);
 
 /*
 let selectClause = () => {
