@@ -1,17 +1,17 @@
 export class TerminalElt {
   static ID = 0;
-  constructor(_elts /*@Array*/,ctx,kind) {
+  constructor(elt /*@Array*/,ctx,kind) {
     let self = this;
     self.title = "title";
     self.elts = [];
-    
-    if( typeof _elts !== "undefined"){
-      if (!Array.isArray(_elts)){
-        _elts = [_elts];
-      } 
-      self.title = _elts[0];
-      self.elts = _elts;
+
+    let r = self.resolveElt(elt); 
+    if( r !== null) {
+      // only one elt can be added
+      self.elts.push(r);
+      self.title = r;
     }
+    
     //get new id
     TerminalElt.ID = TerminalElt.ID + 1;
     self.kind = kind || "terminal";
@@ -22,34 +22,6 @@ export class TerminalElt {
     self.ctx = ctx;
   }
   
-  ctx(_ctx){
-    this.ctx = _ctx;
-    return this;
-  }
-
-  title(_title){
-    this.title = _title;
-    return this;
-  }
-
-  id(_id){
-    this.id = _id;
-    return this;
-  }
-
-  add(elt){
-    // only one elt can be added
-    if(this.elts.length > 0){
-      this.elts.clear();
-    }
-    let e = this.resolveElt(elt); 
-    if( e !== null) {
-      this.elts.push(this.resolveElt(elt));
-    }
-    
-    return this;
-  }
-
   resolveElt(elt){
     // Only accept primitive types as Terminal Element 
     let result = null;
@@ -65,6 +37,34 @@ export class TerminalElt {
       }
     }
     return result;
+  }
+
+  ctx(_ctx){
+    this.ctx = _ctx;
+    return this;
+  }
+
+  title(_title){
+    this.title = _title;
+    return this;
+  }
+
+  id(_id){
+    this.id = _id;
+    return this;
+  }
+
+  add(elt){  
+    let r = this.resolveElt(elt); 
+    if( r !== null) {
+      // only one elt can be added
+      if(this.elts.length > 0){
+        this.elts.clear();
+      }
+      this.elts.push(r);
+    }
+    
+    return this;
   }
 
   foundElt(elt) {
@@ -86,13 +86,14 @@ export class NonTerminalElt extends TerminalElt {
     self.start = new TerminalElt("start",null,"start");
     self.finish = new TerminalElt("finish",null,"finish");
 
-    if (!Array.isArray(_elts)){
-      _elts = [_elts];
-    }
-
     if(Array.isArray(_elts)) {
-      self.elts = _elts.map(self.resolveElt);
-    } 
+      self.elts = _elts.map(self.resolveElt).filter( e => { return e!= null});
+    } else {
+      let r = self.resolveElt(_elts);
+      if( r != null) {
+        self.elts.push(r);
+      }
+    }
 
     if (self.title === null) {
       self.title = "" + self.id;
@@ -118,11 +119,17 @@ export class NonTerminalElt extends TerminalElt {
     let self = this;
     if(Array.isArray(elt)){
       elt.forEach((e) => {
-        self.elts.push(self.resolveElt(e));
+        let r = self.resolveElt(e);
+        if( r != null) {
+          self.elts.push(r);
+        }
       });
 
     } else {
-      self.elts.push(self.resolveElt(elt));
+      let r = self.resolveElt(elt);
+      if( r != null) {
+        self.elts.push(r);
+      }
     }
     
     return this;
