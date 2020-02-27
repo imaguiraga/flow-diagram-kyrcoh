@@ -1,8 +1,8 @@
 import {NonTerminal,Terminal} from "./terminal.js"
 
 export class Sequence extends NonTerminal {
-  constructor(value,kind,ctx) {
-    super(value,kind ||"sequence", ctx);
+  constructor(value,ctx,kind) {
+    super(value,ctx,kind ||"sequence");
   }
 
 }

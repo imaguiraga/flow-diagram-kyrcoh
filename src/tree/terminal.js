@@ -1,6 +1,6 @@
 export class Terminal {
   static ID = 0;
-  constructor(values /*@Array*/,kind,ctx) {
+  constructor(values /*@Array*/,ctx,kind) {
     let self = this;
 
     self.title = values[0];
@@ -42,18 +42,20 @@ export class Terminal {
 }
 
 export class NonTerminal extends Terminal {
-  constructor(_nodes,kind,ctx) {
-    super(_nodes,kind,ctx);
+  constructor(_nodes,ctx,kind) {
+    super(_nodes,ctx,kind);
     let self = this;
     self._nodes = [];
     self.title = null;
-    self._start = new Terminal(["start"], "start");
-    self._finish = new Terminal(["finish"], "finish");
-
+    self._start = new Terminal(["start"],null,"start");
+    self._finish = new Terminal(["finish"],null,"finish");
+    if (!Array.isArray(_nodes)){
+      _nodes = [_nodes];
+    }
     if (Array.isArray(_nodes)) {
       let val = _nodes.map(n => {
         if (n instanceof Function) {
-          return n.call();//Terminal.getName(n.name, n.call());
+          return n.call();
         } else if (typeof n === "string") {
           return terminal(n);
         }
@@ -61,18 +63,7 @@ export class NonTerminal extends Terminal {
       });
       self._nodes = val;
     } 
-    /*else {
-      if (_nodes instanceof Function) {
-        console.log(_nodes.name);
-        self._nodes.push(Terminal.getName(_nodes.name, _nodes.call()));
-      } else {
-        if (typeof _nodes === "string") {
-          self._nodes.push(terminal(_nodes));
-        } else {
-          self._nodes.push(_nodes);
-        }
-      }
-    }//*/
+
     if (this.title === null) {
       this.title = "" + this.id;
     }
@@ -83,5 +74,5 @@ export class NonTerminal extends Terminal {
 }
 
 export function terminal(elt,ctx) {
-  return new Terminal([elt],"terminal",ctx);
+  return new Terminal([elt],ctx);
 }
