@@ -1,4 +1,4 @@
-import {NonTerminalElt,TerminalElt,terminal} from "./terminal.js"
+import {NonTerminalElt} from "./terminal.js"
 
 export class OptionalElt extends NonTerminalElt {
   constructor(elts,ctx,kind)  {
