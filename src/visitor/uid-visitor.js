@@ -11,7 +11,7 @@ export class UIDVisitor {
       tree.start.id = this._prefix + ":" + tree.kind + ".start";
       tree.finish.id = this._prefix + ":" + tree.kind + ".finish";
     }
-    tree._nodes.filter(n => n instanceof Object).forEach(
+    tree.elts.filter(n => n instanceof Object).forEach(
       (node,index) =>  {
         // keep only terminal nodes
         let p = this._prefix.concat("."+index);

@@ -46,7 +46,7 @@ export class G6Visitor {
 
 export class TerminalG6Visitor{
   static visit(visitor,tree,filter) {
-    const data = {
+    const g6data = {
       nodes: [],
       edges: []
     };
@@ -60,27 +60,27 @@ export class TerminalG6Visitor{
     };
     if (filter) {
       if (!filter(n)) {
-        data.nodes.push(n);
+        g6data.nodes.push(n);
       }
     } else {
-      data.nodes.push(n);
+      g6data.nodes.push(n);
     }
-    return data;
+    return g6data;
   }
 
 }
 
 export class SequenceG6Visitor{
   static visit(visitor,tree,filter) {
-    const data = {
+    const g6data = {
       nodes: [],
       edges: []
     };
     if (tree.kind !== "sequence") {
-      return data;
+      return g6data;
     }
     // start + finish nodes
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.start.id,
       label: tree.start.id,
       model: { 
@@ -89,7 +89,7 @@ export class SequenceG6Visitor{
     });
     // nodes
     if (tree.kind === "sequence") {
-      tree._nodes.forEach(node => {
+      tree.elts.forEach(node => {
         // keep only terminal nodes
         if (node.kind !== "terminal") {
           return;
@@ -103,14 +103,14 @@ export class SequenceG6Visitor{
         };
         if (filter) {
           if (!filter(n)) {
-            data.nodes.push(n);
+            g6data.nodes.push(n);
           }
         } else {
-          data.nodes.push(n);
+          g6data.nodes.push(n);
         }
       });
     }
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.finish.id,
       label: tree.finish.id ,
       model: { 
@@ -118,49 +118,49 @@ export class SequenceG6Visitor{
       }
     });
     // edges
-    data.edges.push({
+    g6data.edges.push({
         source: tree.start.id,
-        target: tree._nodes[0].start.id
+        target: tree.elts[0].start.id
       });
 
-    for (let i = 0; i < tree._nodes.length - 1; i++) {
-      data.edges.push({
-        source: tree._nodes[i].finish.id,
-        target: tree._nodes[i + 1].start.id
+    for (let i = 0; i < tree.elts.length - 1; i++) {
+      g6data.edges.push({
+        source: tree.elts[i].finish.id,
+        target: tree.elts[i + 1].start.id
       });
     }
 
-    data.edges.push({
-      source: tree._nodes[tree._nodes.length - 1].finish.id,
+    g6data.edges.push({
+      source: tree.elts[tree.elts.length - 1].finish.id,
       target: tree.finish.id
     });
     // concatenate G6 graphs
 
-    tree._nodes.forEach(node => {
+    tree.elts.forEach(node => {
       let g6 = node.accept(visitor,n => tree.foundNode(n));
       if(g6 !== null) {
-        data.nodes = data.nodes.concat(g6.nodes);
-        data.edges = data.edges.concat(g6.edges);
+        g6data.nodes = g6data.nodes.concat(g6.nodes);
+        g6data.edges = g6data.edges.concat(g6.edges);
       }
     });
 
-    return data;
+    return g6data;
   }
 }
 
 export class ChoiceG6Visitor{
   static visit(visitor,tree,filter){
 
-    const data = {
+    const g6data = {
       nodes: [],
       edges: []
     };
     //
     if (tree.kind !== "choice") {
-      return data
+      return g6data
     }
     // start + finish nodes
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.start.id,
       label: tree.start.id,
       model: { 
@@ -170,7 +170,7 @@ export class ChoiceG6Visitor{
 
     // nodes
     if (tree.kind === "choice") {
-      tree._nodes.forEach(node => {
+      tree.elts.forEach(node => {
         // keep only terminal nodes
         if (node.kind !== "terminal") {
           return;
@@ -185,14 +185,14 @@ export class ChoiceG6Visitor{
 
         if (filter) {
           if (!filter(n)) {
-            data.nodes.push(n);
+            g6data.nodes.push(n);
           }
         } else {
-          data.nodes.push(n);
+          g6data.nodes.push(n);
         }
       });
     }
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.finish.id,
       label: tree.finish.id ,
       model: { 
@@ -200,42 +200,42 @@ export class ChoiceG6Visitor{
       }
     });
     // edges
-    for (let i = 0; i < tree._nodes.length; i++) {
-      data.edges.push({
+    for (let i = 0; i < tree.elts.length; i++) {
+      g6data.edges.push({
         source: tree.start.id,
-        target: tree._nodes[i].start.id
+        target: tree.elts[i].start.id
       });
-      data.edges.push({
-        source: tree._nodes[i].finish.id,
+      g6data.edges.push({
+        source: tree.elts[i].finish.id,
         target: tree.finish.id
       });
     }
     // concatenate G6 graphs
 
-    tree._nodes.forEach(node => {
+    tree.elts.forEach(node => {
       let g6 = node.accept(visitor,n => tree.foundNode(n));
       if(g6 !== null) {
-        data.nodes = data.nodes.concat(g6.nodes);
-        data.edges = data.edges.concat(g6.edges);
+        g6data.nodes = g6data.nodes.concat(g6.nodes);
+        g6data.edges = g6data.edges.concat(g6.edges);
       }
     });
 
-    return data;
+    return g6data;
   }
   
 }
 
 export class OptionalG6Visitor{
   static visit(visitor,tree,filter) {
-    const data = {
+    const g6data = {
       nodes: [],
       edges: []
     };
     if (tree.kind !== "optional") {
-      return data;
+      return g6data;
     }
     // start + finish nodes
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.start.id,
       label: tree.start.id ,
       model: { 
@@ -246,7 +246,7 @@ export class OptionalG6Visitor{
     // nodes
     debugger;
     if (tree.kind === "optional") {
-      tree._nodes.forEach(node => {
+      tree.elts.forEach(node => {
         // keep only terminal nodes
         if (node.kind !== "terminal") {
           return;
@@ -260,14 +260,14 @@ export class OptionalG6Visitor{
         };
         if (filter) {
           if (!filter(n)) {
-            data.nodes.push(n);
+            g6data.nodes.push(n);
           }
         } else {
-          data.nodes.push(n);
+          g6data.nodes.push(n);
         }
       });
     }
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.finish.id,
       label: tree.finish.id ,
       model: { 
@@ -275,46 +275,46 @@ export class OptionalG6Visitor{
       }
     });
     // edges
-    for (let i = 0; i < tree._nodes.length; i++) {
-      data.edges.push({
+    for (let i = 0; i < tree.elts.length; i++) {
+      g6data.edges.push({
         source: tree.start.id,
-        target: tree._nodes[i].start.id
+        target: tree.elts[i].start.id
       });
-      data.edges.push({
-        source: tree._nodes[i].finish.id,
+      g6data.edges.push({
+        source: tree.elts[i].finish.id,
         target: tree.finish.id
       });
     }
 
-    data.edges.push({
+    g6data.edges.push({
       source: tree.start.id,
       target: tree.finish.id
     });
     // concatenate G6 graphs
 
-    tree._nodes.forEach(node => {
+    tree.elts.forEach(node => {
       let g6 = node.accept(visitor,n => tree.foundNode(n));
       if(g6 !== null) {
-        data.nodes = data.nodes.concat(g6.nodes);
-        data.edges = data.edges.concat(g6.edges);
+        g6data.nodes = g6data.nodes.concat(g6.nodes);
+        g6data.edges = g6data.edges.concat(g6.edges);
       }
     });
 
-    return data;
+    return g6data;
   }
 }
 
 export class RepeatG6Visitor{
   static visit(visitor,tree,filter) {
-    const data = {
+    const g6data = {
       nodes: [],
       edges: []
     };
     if (tree.kind !== "repeat") {
-      return data;
+      return g6data;
     }
     // start + finish nodes
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.start.id,
       label: tree.start.id,
       model: { 
@@ -324,7 +324,7 @@ export class RepeatG6Visitor{
 
     // nodes
     if (tree.kind === "repeat") {
-      tree._nodes.forEach(node => {
+      tree.elts.forEach(node => {
         // keep only terminal nodes
         if (node.kind !== "terminal") {
           return;
@@ -338,15 +338,15 @@ export class RepeatG6Visitor{
         };
         if (filter) {
           if (!filter(n)) {
-            data.nodes.push(n);
+            g6data.nodes.push(n);
           }
         } else {
-          data.nodes.push(n);
+          g6data.nodes.push(n);
         }
       });
     }
 
-    data.nodes.push({
+    g6data.nodes.push({
       id: tree.finish.id,
       label: tree.finish.id,
       model: { 
@@ -354,30 +354,30 @@ export class RepeatG6Visitor{
       }
     });
     // edges
-    for (let i = 0; i < tree._nodes.length; i++) {
-      data.edges.push({
+    for (let i = 0; i < tree.elts.length; i++) {
+      g6data.edges.push({
         source: tree.start.id,
-        target: tree._nodes[i].start.id
+        target: tree.elts[i].start.id
       });
-      data.edges.push({
-        source: tree._nodes[i].finish.id,
+      g6data.edges.push({
+        source: tree.elts[i].finish.id,
         target: tree.finish.id
       });
     }
 
-    data.edges.push({
+    g6data.edges.push({
       source: tree.finish.id,
       target: tree.start.id
     });
     // concatenate G6 graphs
 
-    tree._nodes.forEach(node => {
+    tree.elts.forEach(node => {
       let g6 = node.accept(visitor,n => tree.foundNode(n));
       if(g6 !== null) {
-        data.nodes = data.nodes.concat(g6.nodes);
-        data.edges = data.edges.concat(g6.edges);
+        g6data.nodes = g6data.nodes.concat(g6.nodes);
+        g6data.edges = g6data.edges.concat(g6.edges);
       }
     });
-    return data;
+    return g6data;
   }
 }

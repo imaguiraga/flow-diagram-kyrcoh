@@ -1,18 +1,24 @@
 export class Terminal {
   static ID = 0;
-  constructor(values /*@Array*/,ctx,kind) {
+  constructor(_elts /*@Array*/,ctx,kind) {
     let self = this;
-    if (!Array.isArray(values)){
-      values = [values];
+    self.title = "title";
+    self.elts = [];
+    
+    if( typeof _elts !== "undefined"){
+      if (!Array.isArray(_elts)){
+        _elts = [_elts];
+      } 
+      self.title = _elts[0];
+      self.elts = _elts;
     }
-    self.title = values[0];
     //get new id
     Terminal.ID = Terminal.ID + 1;
     self.kind = kind || "terminal";
     self.id = self.kind + "." + Terminal.ID;
-    self._nodes = values;
-    self._start = this;
-    self._finish = this;
+    
+    self.start = this;
+    self.finish = this;
     self.ctx = ctx;
   }
   
@@ -31,20 +37,22 @@ export class Terminal {
     return this;
   }
 
-  get start() {
-    return this._start;
+  add(elt){
+    let self = this;
+    if(Array.isArray(elt)){
+      elt.forEach((e) => {
+        self.elts.push(e);
+      });
+
+    } else {
+      self.elts.push(elt);
+    }
+    
+    return this;
   }
 
-  get finish() {
-    return this._finish;
-  }
-
-  get children() {
-    return this._nodes;
-  }
-
-  foundNode(node) {
-    return this.id === node.id;
+  foundNode(elt) {
+    return this.id === elt.id;
   }
 
   accept(visitor,filter){
@@ -54,37 +62,36 @@ export class Terminal {
 }
 
 export class NonTerminal extends Terminal {
-  constructor(_nodes,ctx,kind) {
-    super(_nodes,ctx,kind);
+  constructor(_elts,ctx,kind) {
+    super(_elts,ctx,kind);
     let self = this;
-    self._nodes = [];
+    self.elts = [];
     self.title = null;
-    self._start = new Terminal("start",null,"start");
-    self._finish = new Terminal("finish",null,"finish");
+    self.start = new Terminal("start",null,"start");
+    self.finish = new Terminal("finish",null,"finish");
 
-    if (!Array.isArray(_nodes)){
-      _nodes = [_nodes];
+    if (!Array.isArray(_elts)){
+      _elts = [_elts];
     }
 
-    if (Array.isArray(_nodes)) {
-      let val = _nodes.map(n => {
-        if (typeof n === "function") {
-          return n.call();
-        } else if (typeof n === "string") {
-          return terminal(n);
+    if(Array.isArray(_elts)) {
+      self.elts = _elts.map(elt => {
+        if (typeof elt === "function") {
+          return elt.call();
+        } else if (typeof elt === "string") {
+          return terminal(elt);
         }
-        return n;
+        return elt;
       });
-      self._nodes = val;
     } 
 
-    if (this.title === null) {
-      this.title = "" + this.id;
+    if (self.title === null) {
+      self.title = "" + self.id;
     }
   }
 
   foundNode(node) {
-    return this._nodes.filter(n => n.id === node.id).length > 0;
+    return this.elts.filter(elt => elt.id === node.id).length > 0;
   }
 }
 

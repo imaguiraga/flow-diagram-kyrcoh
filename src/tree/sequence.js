@@ -1,12 +1,12 @@
 import {NonTerminal,Terminal} from "./terminal.js"
 
 export class Sequence extends NonTerminal {
-  constructor(values,ctx,kind) {
-    super(values,ctx,kind ||"sequence");
+  constructor(elts,ctx,kind) {
+    super(elts,ctx,kind ||"sequence");
   }
 
 }
 
-export function sequence(...nodes) {
-  return new Sequence([...nodes]);
+export function sequence(...elts) {
+  return new Sequence([...elts]);
 }
