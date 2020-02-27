@@ -7,6 +7,6 @@ export class Repeat extends NonTerminal {
 
 }
 
-export function repeat(elt,ctx) {
-  return new Repeat(elt,ctx);
+export function repeat(elt) {
+  return new Repeat(elt);
 }

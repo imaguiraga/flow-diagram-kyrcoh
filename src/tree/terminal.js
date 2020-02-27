@@ -15,6 +15,11 @@ export class Terminal {
     self._finish = this;
     self.ctx = ctx;
   }
+  
+  ctx(_ctx){
+    this.ctx = _ctx;
+    return this;
+  }
 
   get start() {
     return this._start;
@@ -51,9 +56,11 @@ export class NonTerminal extends Terminal {
     self.title = null;
     self._start = new Terminal("start",null,"start");
     self._finish = new Terminal("finish",null,"finish");
+
     if (!Array.isArray(_nodes)){
       _nodes = [_nodes];
     }
+    
     if (Array.isArray(_nodes)) {
       let val = _nodes.map(n => {
         if (typeof n === "function") {
@@ -76,6 +83,6 @@ export class NonTerminal extends Terminal {
   }
 }
 
-export function terminal(elt,ctx) {
-  return new Terminal(elt,ctx);
+export function terminal(elt) {
+  return new Terminal(elt);
 }

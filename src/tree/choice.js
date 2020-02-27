@@ -1,8 +1,8 @@
 import {NonTerminal,Terminal} from "./terminal.js"
 
 export class Choice extends NonTerminal {
-  constructor(value,ctx,kind)  {
-    super(value,ctx,kind || "choice");
+  constructor(values,ctx,kind)  {
+    super(values,ctx,kind || "choice");
   }
 
 }

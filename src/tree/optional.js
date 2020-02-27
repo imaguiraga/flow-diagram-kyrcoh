@@ -7,7 +7,7 @@ export class Optional extends NonTerminal {
 
 }
 
-export function optional(elt,ctx) {
-  return new Optional(elt,ctx);
+export function optional(elt) {
+  return new Optional(elt);
 }
 
