@@ -38,15 +38,11 @@ export class TerminalElt {
   }
 
   add(elt){
-    let self = this;
-    if(Array.isArray(elt)){
-      elt.forEach((e) => {
-        self.elts.push(e);
-      });
-
-    } else {
-      self.elts.push(elt);
+    // only one elt can be added
+    if(this.elts.length > 0){
+      this.elts.clear();
     }
+    this.elts.push(elt);
     
     return this;
   }
@@ -94,6 +90,20 @@ export class NonTerminalElt extends TerminalElt {
 
   foundElt(elt) {
     return this.elts.filter(e => e.id === elt.id).length > 0;
+  }
+
+  add(elt){
+    let self = this;
+    if(Array.isArray(elt)){
+      elt.forEach((e) => {
+        self.elts.push(e);
+      });
+
+    } else {
+      self.elts.push(elt);
+    }
+    
+    return this;
   }
 }
 
