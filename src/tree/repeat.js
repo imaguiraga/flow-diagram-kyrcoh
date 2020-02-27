@@ -10,7 +10,7 @@ export class RepeatElt extends NonTerminalElt {
     if(this.elts.length > 0){
       this.elts.clear();
     }
-    this.elts.push(elt);
+    this.elts.push(this.resolveElt(elt));
     return this;
   }
 }
