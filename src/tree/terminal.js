@@ -21,6 +21,16 @@ export class Terminal {
     return this;
   }
 
+  title(_title){
+    this.title = _title;
+    return this;
+  }
+
+  id(_id){
+    this.id = _id;
+    return this;
+  }
+
   get start() {
     return this._start;
   }
@@ -60,7 +70,7 @@ export class NonTerminal extends Terminal {
     if (!Array.isArray(_nodes)){
       _nodes = [_nodes];
     }
-    
+
     if (Array.isArray(_nodes)) {
       let val = _nodes.map(n => {
         if (typeof n === "function") {
