@@ -78,9 +78,11 @@ export class NonTerminalElt extends TerminalElt {
       self.elts = _elts.map(elt => {
         if (typeof elt === "function") {
           return elt.call();
-        } else if (typeof elt === "string") {
+        } else if (typeof elt !== "object") {
+          // very likekly a primitive type
           return terminal(elt);
         }
+        // default to object
         return elt;
       });
     } 
