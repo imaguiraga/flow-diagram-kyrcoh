@@ -1,4 +1,5 @@
-import * as flow from "./flow-export.js";
+import * as flow from "./flow-element";
+import * as diagram from "./flow-diagram";
 const {
   repeat,
   sequence,
@@ -7,10 +8,13 @@ const {
   zeroOrMore,
   terminal,
   TerminalElt,
+} = flow;
+
+const {
   createFlowGraph,
   G6Visitor,
   UIDVisitor
-} = flow;
+} = diagram;
 
 let selectClause = () => sequence(a, b, repeat(optional("c")), zeroOrMore("d"));
 let fromClause = () => choice("1", "2", selectClause, "4");
