@@ -32,7 +32,7 @@ let func = new Function("module",`const {
     terminal
   } = module;
   let f = choice(
-    terminal("a"),
+    "a",
     choice("e", "d"),
     sequence(terminal("b"), terminal("c"),choice("c","d")),
     sequence("c","d")
