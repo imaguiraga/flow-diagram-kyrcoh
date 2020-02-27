@@ -8,8 +8,5 @@ export class Repeat extends NonTerminal {
 }
 
 export function repeat(elt,ctx) {
-  if (typeof elt === "string") {
-    return new Repeat(terminal(elt),ctx);
-  }
   return new Repeat(elt,ctx);
 }

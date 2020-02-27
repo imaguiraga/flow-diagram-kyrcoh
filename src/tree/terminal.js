@@ -56,7 +56,7 @@ export class NonTerminal extends Terminal {
     }
     if (Array.isArray(_nodes)) {
       let val = _nodes.map(n => {
-        if (n instanceof Function) {
+        if (typeof n === "function") {
           return n.call();
         } else if (typeof n === "string") {
           return terminal(n);
@@ -70,6 +70,7 @@ export class NonTerminal extends Terminal {
       this.title = "" + this.id;
     }
   }
+
   foundNode(node) {
     return this._nodes.filter(n => n.id === node.id).length > 0;
   }
