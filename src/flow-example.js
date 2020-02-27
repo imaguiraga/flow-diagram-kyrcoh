@@ -1,4 +1,4 @@
-import * as flow from "./flow.js";
+import * as flow from "./flow-export.js";
 const {
   repeat,
   sequence,
