@@ -1,4 +1,3 @@
-import Terminal from "../tree/terminal.js"
 export class UIDVisitor {
 
   constructor(prefix){
