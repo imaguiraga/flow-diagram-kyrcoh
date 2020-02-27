@@ -1,11 +1,20 @@
+/**
+ * Class TerminalElt.
+ */
 export class TerminalElt {
   static ID = 0;
-  constructor(elt /*@Array*/,ctx,kind) {
+  /**
+   * Create a NonTerminalElt.
+   * @param {object} elts - The elts value.
+   * @param {object} ctx - The ctx value.
+   * @param {string} kind - The kind value.
+   */
+  constructor(elts,ctx,kind) {
     let self = this;
     self.title = "title";
     self.elts = [];
 
-    let r = self.resolveElt(elt); 
+    let r = self.resolveElt(elts); 
     if( r !== null) {
       // only one elt can be added
       self.elts.push(r);
@@ -29,29 +38,14 @@ export class TerminalElt {
       try {
         if (typeof elt === "function") {
           result = elt.call();
-        } 
-        
+        }        
         result = elt.toString();
-      } catch(e){
 
+      } catch(err){
+        console.error(err.message + " - " +err);
       }
     }
     return result;
-  }
-
-  ctx(_ctx){
-    this.ctx = _ctx;
-    return this;
-  }
-
-  title(_title){
-    this.title = _title;
-    return this;
-  }
-
-  id(_id){
-    this.id = _id;
-    return this;
   }
 
   add(elt){  
@@ -75,21 +69,51 @@ export class TerminalElt {
     return visitor.visit(this,filter);
   }
 
+
+  ctx(_ctx){
+    this.ctx = _ctx;
+    return this;
+  }
+
+  title(_title){
+    this.title = _title;
+    return this;
+  }
+
+  id(_id){
+    this.id = _id;
+    return this;
+  }
+
 }
 
+export function terminal(elt) {
+  return new TerminalElt(elt);
+}
+
+/**
+ * Class NonTerminalElt.
+ * @extends TerminalElt
+ */
 export class NonTerminalElt extends TerminalElt {
-  constructor(_elts,ctx,kind) {
-    super(_elts,ctx,kind);
+  /**
+   * Create a NonTerminalElt.
+   * @param {object} elts - The elts value.
+   * @param {object} ctx - The ctx value.
+   * @param {string} kind - The kind value.
+   */
+  constructor(elts,ctx,kind) {
+    super(elts,ctx,kind);
     let self = this;
     self.elts = [];
     self.title = null;
     self.start = new TerminalElt("start",null,"start");
     self.finish = new TerminalElt("finish",null,"finish");
 
-    if(Array.isArray(_elts)) {
-      self.elts = _elts.map(self.resolveElt).filter( e => { return e!= null});
+    if(Array.isArray(elts)) {
+      self.elts = elts.map(self.resolveElt).filter( e => { return e!= null});
     } else {
-      let r = self.resolveElt(_elts);
+      let r = self.resolveElt(elts);
       if( r != null) {
         self.elts.push(r);
       }
@@ -134,8 +158,4 @@ export class NonTerminalElt extends TerminalElt {
     
     return this;
   }
-}
-
-export function terminal(elt) {
-  return new TerminalElt(elt);
 }
