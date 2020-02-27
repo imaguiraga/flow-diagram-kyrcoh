@@ -1,16 +1,17 @@
 export class Terminal {
   static ID = 0;
-  constructor(value, kind) {
+  constructor(values /*@Array*/,kind,ctx) {
     let self = this;
 
-    self.title = value;
+    self.title = values[0];
     //get new id
     Terminal.ID = Terminal.ID + 1;
     self.kind = kind || "terminal";
     self.id = self.kind + "." + Terminal.ID;
-    self._nodes = [value];
+    self._nodes = values;
     self._start = this;
     self._finish = this;
+    self.ctx = ctx;
   }
 
   get start() {
@@ -41,25 +42,26 @@ export class Terminal {
 }
 
 export class NonTerminal extends Terminal {
-  constructor(_nodes, type) {
-    super(_nodes, type);
+  constructor(_nodes,kind,ctx) {
+    super(_nodes,kind,ctx);
     let self = this;
     self._nodes = [];
     self.title = null;
-    self._start = new Terminal("start", "start");
-    self._finish = new Terminal("finish", "finish");
+    self._start = new Terminal(["start"], "start");
+    self._finish = new Terminal(["finish"], "finish");
 
     if (Array.isArray(_nodes)) {
       let val = _nodes.map(n => {
         if (n instanceof Function) {
-          return Terminal.getName(n.name, n.call());
+          return n.call();//Terminal.getName(n.name, n.call());
         } else if (typeof n === "string") {
-          return terminal(n);
+          return terminal(n)();
         }
         return n;
       });
       self._nodes = val;
-    } else {
+    } 
+    /*else {
       if (_nodes instanceof Function) {
         console.log(_nodes.name);
         self._nodes.push(Terminal.getName(_nodes.name, _nodes.call()));
@@ -70,7 +72,7 @@ export class NonTerminal extends Terminal {
           self._nodes.push(_nodes);
         }
       }
-    }
+    }//*/
     if (this.title === null) {
       this.title = "" + this.id;
     }
@@ -80,6 +82,6 @@ export class NonTerminal extends Terminal {
   }
 }
 
-export function terminal(elt) {
-  return new Terminal(elt);
+export function terminal(elt,ctx) {
+  return () => {new Terminal([elt],"terminal",ctx)};
 }

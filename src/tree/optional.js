@@ -1,17 +1,17 @@
 import {NonTerminal,Terminal,terminal} from "./terminal.js"
 
 export class Optional extends NonTerminal {
-  constructor(value) {
-    super(value, "optional");
-    this.type = "optional";
+  constructor(value,kind,ctx) {
+    super(value, kind || "optional", ctx);
   }
 
 }
 
-export function optional(elt) {
+export function optional(elt,ctx) {
+  
   if (typeof elt === "string") {
-    return new Optional(terminal(elt));
+    return new Optional([terminal(elt)],"optional",ctx);
   }
-  return new Optional(elt);
+  return new Optional([elt],"optional",ctx);
 }
 
