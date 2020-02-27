@@ -6,7 +6,7 @@ const {
   choice,
   zeroOrMore,
   terminal,
-  Terminal,
+  TerminalElt,
   flowgraph,
   G6Visitor,
   UIDVisitor
