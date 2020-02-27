@@ -55,7 +55,7 @@ export class NonTerminal extends Terminal {
         if (n instanceof Function) {
           return n.call();//Terminal.getName(n.name, n.call());
         } else if (typeof n === "string") {
-          return terminal(n)();
+          return terminal(n);
         }
         return n;
       });
@@ -83,5 +83,5 @@ export class NonTerminal extends Terminal {
 }
 
 export function terminal(elt,ctx) {
-  return () => {new Terminal([elt],"terminal",ctx)};
+  return new Terminal([elt],"terminal",ctx);
 }

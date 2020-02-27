@@ -9,7 +9,7 @@ export class Repeat extends NonTerminal {
 
 export function repeat(elt,ctx) {
   if (typeof elt === "string") {
-    return new Repeat([terminal([elt])],"repeat",ctx);
+    return new Repeat([terminal(elt)],"repeat",ctx);
   }
   return new Repeat([elt],"repeat",ctx);
 }

@@ -8,6 +8,6 @@ export class Choice extends NonTerminal {
 }
 
 export function choice(...nodes) {
-  return () => {new Choice([...nodes])};
+  return new Choice([...nodes]);
 }
 

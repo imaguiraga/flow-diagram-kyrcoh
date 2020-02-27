@@ -8,7 +8,6 @@ export class Optional extends NonTerminal {
 }
 
 export function optional(elt,ctx) {
-  
   if (typeof elt === "string") {
     return new Optional([terminal(elt)],"optional",ctx);
   }
