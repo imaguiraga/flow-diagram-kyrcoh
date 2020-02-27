@@ -43,11 +43,6 @@ export class Terminal {
     return this._nodes;
   }
 
-  static getName(name, obj) {
-    obj.title = name;
-    return obj;
-  }
-
   foundNode(node) {
     return this.id === node.id;
   }
