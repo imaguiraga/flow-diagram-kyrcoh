@@ -23,28 +23,28 @@ export class G6Visitor {
   }
 
   visitSequence(tree,filter){
-    return SequenceG6Visitor.visit(this,tree,filter);
+    return SequenceEltG6Visitor.visit(this,tree,filter);
   }
 
   visitChoice(tree,filter){
-    return ChoiceG6Visitor.visit(this,tree,filter);
+    return ChoiceEltG6Visitor.visit(this,tree,filter);
   }
 
   visitOptional(tree,filter){
-    return OptionalG6Visitor.visit(this,tree,filter);
+    return OptionalEltG6Visitor.visit(this,tree,filter);
   }
 
   visitRepeat(tree,filter){
-    return RepeatG6Visitor.visit(this,tree,filter);
+    return RepeatEltG6Visitor.visit(this,tree,filter);
   }
 
   visitTerminal(tree,filter){
-    return TerminalG6Visitor.visit(this,tree,filter);
+    return TerminalEltG6Visitor.visit(this,tree,filter);
   }
 }
 
 
-export class TerminalG6Visitor{
+export class TerminalEltG6Visitor{
   static visit(visitor,tree,filter) {
     const g6data = {
       nodes: [],
@@ -70,7 +70,7 @@ export class TerminalG6Visitor{
 
 }
 
-export class SequenceG6Visitor{
+export class SequenceEltG6Visitor{
   static visit(visitor,tree,filter) {
     const g6data = {
       nodes: [],
@@ -136,8 +136,8 @@ export class SequenceG6Visitor{
     });
     // concatenate G6 graphs
 
-    tree.elts.forEach(node => {
-      let g6 = node.accept(visitor,n => tree.foundNode(n));
+    tree.elts.forEach(elt => {
+      let g6 = elt.accept(visitor,n => tree.foundElt(n));
       if(g6 !== null) {
         g6data.nodes = g6data.nodes.concat(g6.nodes);
         g6data.edges = g6data.edges.concat(g6.edges);
@@ -148,7 +148,7 @@ export class SequenceG6Visitor{
   }
 }
 
-export class ChoiceG6Visitor{
+export class ChoiceEltG6Visitor{
   static visit(visitor,tree,filter){
 
     const g6data = {
@@ -212,8 +212,8 @@ export class ChoiceG6Visitor{
     }
     // concatenate G6 graphs
 
-    tree.elts.forEach(node => {
-      let g6 = node.accept(visitor,n => tree.foundNode(n));
+    tree.elts.forEach(elt => {
+      let g6 = elt.accept(visitor,n => tree.foundElt(n));
       if(g6 !== null) {
         g6data.nodes = g6data.nodes.concat(g6.nodes);
         g6data.edges = g6data.edges.concat(g6.edges);
@@ -225,7 +225,7 @@ export class ChoiceG6Visitor{
   
 }
 
-export class OptionalG6Visitor{
+export class OptionalEltG6Visitor{
   static visit(visitor,tree,filter) {
     const g6data = {
       nodes: [],
@@ -292,8 +292,8 @@ export class OptionalG6Visitor{
     });
     // concatenate G6 graphs
 
-    tree.elts.forEach(node => {
-      let g6 = node.accept(visitor,n => tree.foundNode(n));
+    tree.elts.forEach(elt => {
+      let g6 = elt.accept(visitor,n => tree.foundElt(n));
       if(g6 !== null) {
         g6data.nodes = g6data.nodes.concat(g6.nodes);
         g6data.edges = g6data.edges.concat(g6.edges);
@@ -304,7 +304,7 @@ export class OptionalG6Visitor{
   }
 }
 
-export class RepeatG6Visitor{
+export class RepeatEltG6Visitor{
   static visit(visitor,tree,filter) {
     const g6data = {
       nodes: [],
@@ -371,8 +371,8 @@ export class RepeatG6Visitor{
     });
     // concatenate G6 graphs
 
-    tree.elts.forEach(node => {
-      let g6 = node.accept(visitor,n => tree.foundNode(n));
+    tree.elts.forEach(elt => {
+      let g6 = elt.accept(visitor,n => tree.foundElt(n));
       if(g6 !== null) {
         g6data.nodes = g6data.nodes.concat(g6.nodes);
         g6data.edges = g6data.edges.concat(g6.edges);

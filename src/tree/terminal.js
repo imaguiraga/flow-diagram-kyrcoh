@@ -1,4 +1,4 @@
-export class Terminal {
+export class TerminalElt {
   static ID = 0;
   constructor(_elts /*@Array*/,ctx,kind) {
     let self = this;
@@ -13,9 +13,9 @@ export class Terminal {
       self.elts = _elts;
     }
     //get new id
-    Terminal.ID = Terminal.ID + 1;
+    TerminalElt.ID = TerminalElt.ID + 1;
     self.kind = kind || "terminal";
-    self.id = self.kind + "." + Terminal.ID;
+    self.id = self.kind + "." + TerminalElt.ID;
     
     self.start = this;
     self.finish = this;
@@ -51,7 +51,7 @@ export class Terminal {
     return this;
   }
 
-  foundNode(elt) {
+  foundElt(elt) {
     return this.id === elt.id;
   }
 
@@ -61,14 +61,14 @@ export class Terminal {
 
 }
 
-export class NonTerminal extends Terminal {
+export class NonTerminalElt extends TerminalElt {
   constructor(_elts,ctx,kind) {
     super(_elts,ctx,kind);
     let self = this;
     self.elts = [];
     self.title = null;
-    self.start = new Terminal("start",null,"start");
-    self.finish = new Terminal("finish",null,"finish");
+    self.start = new TerminalElt("start",null,"start");
+    self.finish = new TerminalElt("finish",null,"finish");
 
     if (!Array.isArray(_elts)){
       _elts = [_elts];
@@ -90,11 +90,11 @@ export class NonTerminal extends Terminal {
     }
   }
 
-  foundNode(node) {
-    return this.elts.filter(elt => elt.id === node.id).length > 0;
+  foundElt(elt) {
+    return this.elts.filter(e => e.id === elt.id).length > 0;
   }
 }
 
 export function terminal(elt) {
-  return new Terminal(elt);
+  return new TerminalElt(elt);
 }

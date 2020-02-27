@@ -1,6 +1,6 @@
-import {NonTerminal,Terminal,terminal} from "./terminal.js"
+import {NonTerminalElt,TerminalElt,terminal} from "./terminal.js"
 
-export class Optional extends NonTerminal {
+export class OptionalElt extends NonTerminalElt {
   constructor(elts,ctx,kind)  {
     super(elts,ctx,kind || "optional");
   }
@@ -16,6 +16,6 @@ export class Optional extends NonTerminal {
 }
 
 export function optional(elt) {
-  return new Optional(elt);
+  return new OptionalElt(elt);
 }
 

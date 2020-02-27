@@ -1,6 +1,6 @@
-import {NonTerminal,Terminal,terminal} from "./terminal.js"
+import {NonTerminalElt,TerminalElt,terminal} from "./terminal.js"
 
-export class Repeat extends NonTerminal {
+export class RepeatElt extends NonTerminalElt {
   constructor(elts,ctx,kind) {
     super(elts,ctx,kind ||"repeat");
   }
@@ -16,5 +16,5 @@ export class Repeat extends NonTerminal {
 }
 
 export function repeat(elt) {
-  return new Repeat(elt);
+  return new RepeatElt(elt);
 }

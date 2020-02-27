@@ -1,6 +1,6 @@
-import {NonTerminal,Terminal} from "./terminal.js"
+import {NonTerminalElt,TerminalElt} from "./terminal.js"
 
-export class Choice extends NonTerminal {
+export class ChoiceElt extends NonTerminalElt {
   constructor(elts,ctx,kind)  {
     super(elts,ctx,kind || "choice");
   }
@@ -8,6 +8,6 @@ export class Choice extends NonTerminal {
 }
 
 export function choice(...elts) {
-  return new Choice([...elts]);
+  return new ChoiceElt([...elts]);
 }
 
