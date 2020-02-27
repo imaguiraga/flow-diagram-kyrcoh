@@ -2,7 +2,9 @@ export class Terminal {
   static ID = 0;
   constructor(values /*@Array*/,ctx,kind) {
     let self = this;
-
+    if (!Array.isArray(values)){
+      values = [values];
+    }
     self.title = values[0];
     //get new id
     Terminal.ID = Terminal.ID + 1;
@@ -47,8 +49,8 @@ export class NonTerminal extends Terminal {
     let self = this;
     self._nodes = [];
     self.title = null;
-    self._start = new Terminal(["start"],null,"start");
-    self._finish = new Terminal(["finish"],null,"finish");
+    self._start = new Terminal("start",null,"start");
+    self._finish = new Terminal("finish",null,"finish");
     if (!Array.isArray(_nodes)){
       _nodes = [_nodes];
     }
@@ -74,5 +76,5 @@ export class NonTerminal extends Terminal {
 }
 
 export function terminal(elt,ctx) {
-  return new Terminal([elt],ctx);
+  return new Terminal(elt,ctx);
 }
