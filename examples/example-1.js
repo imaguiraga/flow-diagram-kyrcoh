@@ -5,15 +5,15 @@ import {
   choice,
   zeroOrMore,
   terminal,
-  flowgraph,
+  createFlowGraph,
   G6Visitor
-} from "../src/flow.js";
+} from "../src/flow-export.js";
 
 let testflow = choice(terminal("a"), choice("e", "d"));
 
 const visitor = new G6Visitor();
 const data = visitor.visit(testflow);
 
-let graph = flowgraph("container");
+let graph = createFlowGraph("container");
 graph.data(data);
 graph.render();

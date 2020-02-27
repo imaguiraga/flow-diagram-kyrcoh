@@ -28,7 +28,7 @@ const flowEltNodeOptions =    {
     fill: "#5394ef"
   };
 
-export function flowgraph(containerId){
+export function createFlowGraph(containerId){
 
   const width = document.getElementById(containerId).scrollWidth || 500;
   const height = document.getElementById(containerId).scrollHeight || 500;

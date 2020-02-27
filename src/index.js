@@ -1,1 +1,1 @@
-import "./main.js"
+import "./flow-demo.js"
