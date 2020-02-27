@@ -79,7 +79,7 @@ export class NonTerminalElt extends TerminalElt {
         if (typeof elt === "function") {
           return elt.call();
         } else if (typeof elt !== "object") {
-          // very likekly a primitive type
+          // very likely a primitive type
           return terminal(elt);
         }
         // default to object
