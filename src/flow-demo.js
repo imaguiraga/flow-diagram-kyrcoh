@@ -7,7 +7,7 @@ const {
   zeroOrMore,
   terminal,
   TerminalElt,
-  flowgraph,
+  createFlowGraph,
   G6Visitor,
   UIDVisitor
 } = flow;
@@ -76,7 +76,7 @@ testflow = uidvisitor.visit(testflow);
 const data = visitor.visit(testflow);
 console.log(JSON.stringify(data));
 
-let graph = flowgraph("container");
+let graph = createFlowGraph("container");
 graph.data(data);
 console.log(graph);
 graph.render();
