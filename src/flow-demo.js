@@ -19,11 +19,12 @@ let selectClause = () => sequence(a, b, repeat(optional("c")), zeroOrMore("d"));
 let fromClause = () => choice("1", "2", selectClause, "4");
 
 let testflow = choice(
-  terminal("a"),
+  terminal("a")._title_("dummy"),
   choice("e", "d"),
   sequence(terminal("b"), terminal("c"),sequence("c","d")),
   sequence("c","d")
 );
+
 //*/
 // Generate flow by parsing javascript text
 let func = new Function("module",`const {
@@ -42,7 +43,7 @@ let func = new Function("module",`const {
   );
   return f;`);
 try {
-  testflow = func(flow);
+  //testflow = func(flow);
 }catch(e){
   console.error(e.name + ': ' + e.message);
 }
